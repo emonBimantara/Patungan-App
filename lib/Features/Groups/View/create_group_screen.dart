@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:patungan/Routes/app_routes.dart';
+import 'package:patungan/Widgets/create_group_info.dart';
+import 'package:patungan/Widgets/custom_button.dart';
+import 'package:patungan/Widgets/custom_text_field.dart';
 
 class CreateGroupScreen extends StatefulWidget {
   const CreateGroupScreen({super.key});
@@ -10,6 +13,9 @@ class CreateGroupScreen extends StatefulWidget {
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
+  TextEditingController groupNameController = TextEditingController();
+  TextEditingController paymentInfoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +37,48 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           onPressed: () {
             context.go(AppRoutes.homePage);
           },
+        ),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Group Name",
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            ),
+            SizedBox(height: 10),
+            CustomTextField(
+              controller: groupNameController,
+              hintText: "Weekend Hangout",
+              obscureText: false,
+              keyboardType: TextInputType.text,
+            ),
+
+            SizedBox(height: 30),
+
+            Text(
+              "Payment Info (Bank Account / e-Wallet)",
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            ),
+            SizedBox(height: 10),
+            CustomTextField(
+              controller: paymentInfoController,
+              hintText: "PAYPAL - 1234567890",
+              obscureText: false,
+              keyboardType: TextInputType.text,
+            ),
+
+            SizedBox(height: 30),
+
+            CreateGroupInfo(),
+
+            SizedBox(height: 30),
+
+            CustomButton(text: "Create Group", isLoading: false)
+          ],
         ),
       ),
     );

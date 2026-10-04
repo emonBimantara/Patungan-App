@@ -20,11 +20,18 @@ class _LoginScreenState extends State<LoginScreen> {
   final AuthController authController = Get.find<AuthController>();
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Padding(
@@ -52,15 +59,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-        
+
                 SizedBox(height: 50),
-        
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Email Address",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                     SizedBox(height: 5),
                     CustomTextField(
@@ -71,15 +81,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-        
+
                 SizedBox(height: 10),
-        
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Password",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                     SizedBox(height: 5),
                     CustomTextField(
@@ -90,9 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-        
+
                 SizedBox(height: 20),
-        
+
                 SizedBox(
                   height: 20,
                   child: Obx(
@@ -103,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-        
+
                 SizedBox(height: 20),
                 Obx(
                   () => GestureDetector(
@@ -123,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 20),
-        
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

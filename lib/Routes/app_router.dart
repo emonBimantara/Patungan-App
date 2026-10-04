@@ -21,7 +21,7 @@ Future<GoRouter> createAppRouter(Map<String, String>? session) async {
   final session = await authController.getSession();
 
   return GoRouter(
-    initialLocation: session == null ? AppRoutes.loginPage : '/home',
+    initialLocation: session == null ? AppRoutes.loginPage : '/homePage',
 
     routes: [
       GoRoute(
@@ -41,7 +41,7 @@ Future<GoRouter> createAppRouter(Map<String, String>? session) async {
       ),
 
       GoRoute(
-        path: '/home',
+        path: '/homePage',
         redirect: (context, state) {
           if (session == null && state.extra == null) {
             return AppRoutes.loginPage;
