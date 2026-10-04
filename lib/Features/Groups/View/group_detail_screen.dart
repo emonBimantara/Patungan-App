@@ -37,16 +37,43 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     await groupController.getGroupDetail(session['token']!, widget.groupId);
   }
 
+  Future<void> addMember(String email) async {
+    final authStorage = AuthStorage();
+    final session = await authStorage.getSession();
+
+    if (session == null) {
+      return;
+    }
+
+    final success = await groupController.addMember(
+      session['token']!,
+      widget.groupId,
+      email,
+    );
+
+    if (!mounted) return;
+
+    if (success) {
+      Navigator.pop(context);
+
+      await groupController.getGroupDetail(session['token']!, widget.groupId);
+    }
+  }
+
   void showAddMemberModal() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return AddMemberModal(
-          onAdd: (email) {
-            print(email);
-          },
+        return Obx(
+          () => AddMemberModal(
+            errorMessage: groupController.addMemberError.value,
+            isLoading: groupController.isAddingMember.value,
+            onAdd: (email) {
+              return addMember(email);
+            },
+          ),
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:patungan/Features/Groups/Model/add_member_model.dart';
 import 'package:patungan/Features/Groups/Model/create_group_model.dart';
 import 'package:patungan/Features/Groups/Model/group_detail_model.dart';
 import 'package:patungan/Features/Groups/Model/group_model.dart';
@@ -14,6 +15,9 @@ class GroupController extends GetxController {
   final errorMessage = ''.obs;
 
   final groupDetail = Rxn<GroupDetail>();
+
+  final isAddingMember = false.obs;
+  final addMemberError = ''.obs;
 
   Future<void> getMyGroups(String token) async {
     isLoading.value = true;
@@ -64,6 +68,32 @@ class GroupController extends GetxController {
       errorMessage.value = e.toString().replaceFirst('Exception: ', '');
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<bool> addMember(String token, String groupId, String email) async {
+    isAddingMember.value = true;
+    addMemberError.value = '';
+
+    try {
+      final request = AddMemberRequest(email: email);
+      await groupService.addMember(token, groupId, request);
+
+      return true;
+    } catch (e) {
+      final error = e.toString();
+
+      if (error.contains('User not found')) {
+        addMemberError.value = 'Invalid Email';
+      } else if (error.contains('already a member')) {
+        addMemberError.value = 'User is already a member';
+      } else {
+        addMemberError.value = 'Failed to add member';
+      }
+
+      return false;
+    } finally {
+      isAddingMember.value = false;
     }
   }
 }

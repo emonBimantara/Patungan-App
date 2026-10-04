@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:patungan/Features/Groups/Model/add_member_model.dart';
 import 'package:patungan/Features/Groups/Model/create_group_model.dart';
 import 'package:patungan/Features/Groups/Model/group_detail_model.dart';
 import 'package:patungan/Features/Groups/Model/group_model.dart';
@@ -66,5 +67,33 @@ class GroupService {
     final errorData = jsonDecode(response.body);
 
     throw Exception(errorData['error'] ?? 'Failed to fetch group detail');
+  }
+
+  Future<void> addMember(
+    String token,
+    String groupId,
+    AddMemberRequest request,
+  ) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/groups/$groupId/members'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(request.toJson()),
+    );
+
+    if (response.statusCode == 201) {
+      return;
+    }
+
+    print('ADD MEMBER STATUS: ${response.statusCode}');
+    print('ADD MEMBER BODY: ${response.body}');
+
+    final errorData = jsonDecode(response.body);
+
+    throw Exception(
+      errorData['error'] ?? errorData['message'] ?? 'Failed to add member',
+    );
   }
 }
