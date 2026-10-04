@@ -62,7 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     radius: 22,
                     backgroundColor: Color(0xFFDBEAFE),
                     child: Text(
-                      "S",
+                      (widget.user.name?.isNotEmpty ?? false)
+                          ? widget.user.name![0].toUpperCase()
+                          : "U",
                       style: TextStyle(
                         color: Color(0xFF2563EB),
                         fontWeight: FontWeight.bold,
@@ -194,7 +196,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             .take(2)
                             .map((member) => member.name)
                             .toList(),
-                        onTap: () {},
+                        onTap: () {
+                          context.push(AppRoutes.groupDetailPage);
+                        },
                       ),
                     );
                   }).toList(),
