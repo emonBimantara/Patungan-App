@@ -206,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          context.go(AppRoutes.createGroupPage);
+          context.push(AppRoutes.createGroupPage);
         },
         backgroundColor: Color(0xFF2563EB),
         elevation: 2,

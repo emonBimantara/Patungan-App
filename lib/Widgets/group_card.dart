@@ -91,16 +91,6 @@ class GroupCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.calendar_today_outlined,
-                          size: 13,
-                          color: Color(0xFF94A3B8),
-                        ),
-                        SizedBox(width: 4),
-                      ],
-                    ),
                   ],
                 ),
                 SizedBox(height: 14),

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:patungan/Features/Groups/Model/create_group_model.dart';
 import 'package:patungan/Features/Groups/Model/group_model.dart';
 import 'package:patungan/Features/Groups/Service/group_service.dart';
 
@@ -21,6 +22,28 @@ class GroupController extends GetxController {
       groups.value = result;
     } catch (e) {
       errorMessage.value = e.toString().replaceFirst('Exception: ', '');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<CreateGroupResponse?> createGroup(
+    String token,
+    String name,
+    String paymentInfo,
+  ) async {
+    errorMessage.value = '';
+    isLoading.value = true;
+
+    try {
+      final request = CreateGroupRequest(name: name, paymentInfo: paymentInfo);
+      final response = await groupService.createGroup(token, request);
+
+      return response;
+    } catch (e) {
+      errorMessage.value = e.toString().replaceFirst('Exception: ', '');
+
+      return null;
     } finally {
       isLoading.value = false;
     }

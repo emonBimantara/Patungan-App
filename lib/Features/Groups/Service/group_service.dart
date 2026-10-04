@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:patungan/Features/Groups/Model/create_group_model.dart';
 import 'package:patungan/Features/Groups/Model/group_model.dart';
 
 class GroupService {
@@ -22,5 +23,27 @@ class GroupService {
     }
 
     throw Exception('Failed to fetch groups');
+  }
+
+  Future<CreateGroupResponse> createGroup(
+    String token,
+    CreateGroupRequest request,
+  ) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/groups'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(request.toJson()),
+    );
+
+    if (response.statusCode == 201) {
+      return CreateGroupResponse.fromJson(jsonDecode(response.body));
+    }
+
+    final errorData = jsonDecode(response.body);
+
+    throw Exception(errorData['error'] ?? 'Failed to create group');
   }
 }
