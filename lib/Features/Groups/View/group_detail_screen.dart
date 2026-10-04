@@ -5,6 +5,7 @@ import 'package:patungan/Features/Auth/Service/auth_storage.dart'
     show AuthStorage;
 import 'package:patungan/Features/Groups/Controller/group_controller.dart';
 import 'package:patungan/Utils/date_formatter.dart';
+import 'package:patungan/Widgets/add_member_modal.dart';
 import 'package:patungan/Widgets/member_info.dart';
 
 class GroupDetailScreen extends StatefulWidget {
@@ -34,6 +35,21 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
     }
 
     await groupController.getGroupDetail(session['token']!, widget.groupId);
+  }
+
+  void showAddMemberModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return AddMemberModal(
+          onAdd: (email) {
+            print(email);
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -219,16 +235,16 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                   ),
 
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: showAddMemberModal,
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 6,
                       ),
-                      foregroundColor: Color(0xFF2563EB),
+                      foregroundColor: const Color(0xFF2563EB),
                     ),
-                    icon: Icon(Icons.person_add_alt_1_rounded, size: 17),
-                    label: Text(
+                    icon: const Icon(Icons.person_add_alt_1_rounded, size: 17),
+                    label: const Text(
                       "Add Member",
                       style: TextStyle(
                         fontSize: 12,
