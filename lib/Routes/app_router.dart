@@ -90,8 +90,8 @@ Future<GoRouter> createAppRouter(Map<String, String>? session) async {
       GoRoute(
         path: AppRoutes.groupDetailPage,
         builder: (context, state) {
-          AuthBinding().dependencies();
-          return const GroupDetailScreen();
+          final groupId = state.extra as String;
+          return GroupDetailScreen(groupId: groupId);
         },
       ),
     ],

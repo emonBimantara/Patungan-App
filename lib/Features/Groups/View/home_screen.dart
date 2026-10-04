@@ -197,7 +197,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             .map((member) => member.name)
                             .toList(),
                         onTap: () {
-                          context.push(AppRoutes.groupDetailPage);
+                          context.push(
+                            AppRoutes.groupDetailPage,
+                            extra: group.id,
+                          );
                         },
                       ),
                     );

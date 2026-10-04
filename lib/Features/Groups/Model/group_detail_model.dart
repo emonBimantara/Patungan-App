@@ -28,7 +28,7 @@ class GroupDetail {
       createdById: json['createdById'],
       createdBy: Member.fromJson(json['createdBy']),
       groupMembers: (json['groupMembers'] as List)
-          .map((member) => Member.fromJson(member))
+          .map((member) => Member.fromJson(member['user']))
           .toList(),
     );
   }
