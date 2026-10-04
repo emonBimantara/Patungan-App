@@ -9,6 +9,7 @@ import 'package:patungan/Features/Auth/View/login_screen.dart';
 import 'package:patungan/Features/Auth/View/register_screen.dart';
 
 import 'package:patungan/Features/Groups/Binding/group_binding.dart';
+import 'package:patungan/Features/Groups/View/create_group_screen.dart';
 import 'package:patungan/Features/Groups/View/home_screen.dart';
 
 import 'package:patungan/Routes/app_routes.dart';
@@ -74,6 +75,14 @@ Future<GoRouter> createAppRouter(Map<String, String>? session) async {
           }
 
           return HomeScreen(token: token, user: user);
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.createGroupPage,
+        builder: (context, state) {
+          AuthBinding().dependencies();
+          return const CreateGroupScreen();
         },
       ),
     ],
